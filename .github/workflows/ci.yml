@@ -51,7 +51,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${ env.APPLICATION_NAME }/${ env.APPLICATION_NAME }:${ env.APPLICATION_VERSION }
+          tags: ${{ env.APPLICATION_NAME }}/${{ env.APPLICATION_NAME }}:${{ env.APPLICATION_VERSION }}
 ## TODO:
 # Implement Slack notification
 # Implement Auto Deploy
