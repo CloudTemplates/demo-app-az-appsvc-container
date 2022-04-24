@@ -1,0 +1,87 @@
+# This is a basic workflow that is manually triggered
+
+name: Deploy
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI or API.
+on:
+  repository_dispatch:
+    types: [ deploy-command ]
+
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      version:
+        description: 'Artifact ID'   # Friendly description to be shown in the UI instead of 'name'
+        default: ''                       # Default value if no value is explicitly provided
+        required: false                   # Input has to be provided for the workflow to run
+
+      environment:
+        description: 'Environment'              # Friendly description to be shown in the UI instead of 'name'
+        required: true                          # Input has to be provided for the workflow to run
+        type: choice
+        options:
+          - "dev"
+          - "prod"
+
+      region:
+        description: 'Azure Region'             # Friendly description to be shown in the UI instead of 'name'
+        required: true                          # Input has to be provided for the workflow to run
+        type: choice
+        options:
+          - "eastus"
+          - "westus"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+env:
+  APPLICATION_NAME: demo-app
+  APPLICATION_VERSION: ${{ github.event.client_payload.version || github.event.inputs.version }}
+  ENVIRONMENT: ${{ github.event.client_payload.environment || github.event.inputs.environment }}
+  REGION: ${{ github.event.client_payload.region || github.event.inputs.region }}
+
+jobs:
+  setup-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Environment
+        id: envId
+        run: |
+          if [[ ${{ github.event.client_payload.environment || github.event.inputs.environment }} == 'prod' ]]; then
+            echo "::set-output name=env-nm::p"
+          else
+            echo "::set-output name=env-nm::d"
+          fi
+
+          if [[ ${{ github.event.client_payload.region || github.event.inputs.region }} == 'eastus' ]]; then
+            echo "::set-output name=region-nm::azeast"
+          else
+            echo "::set-output name=region-nm::azwest"
+          fi
+    outputs:
+      env-name: ${{ steps.envId.outputs.env-nm }}
+      region-nm: ${{ steps.envId.outputs.region-nm }}
+
+  deploy:
+    environment: ${{ github.event.client_payload.environment || github.event.inputs.environment }}
+    name: Deploy App - ${{ github.event.client_payload.environment || github.event.inputs.environment }} - ${{ github.event.client_payload.region || github.event.inputs.region }}
+    runs-on: ubuntu-latest
+    needs: setup-environment
+
+    steps:
+      - name: Checkout Code from the repository
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App Service - ${{ steps.artifactId.outputs.artifact-version }}
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: demoapp-${{ env.ENV_NM }}-${{ env.REGION_NM }}-ap
+          #slot-name: 'production'
+          #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: '${{ github.workspace }}/root.jar'
+        env:
+          ENV_NM: ${{ needs.setup-environment.outputs.env-name }}
+          REGION_NM: ${{ needs.setup-environment.outputs.region-nm }}
