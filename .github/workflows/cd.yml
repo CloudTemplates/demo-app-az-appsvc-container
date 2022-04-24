@@ -89,3 +89,7 @@ jobs:
         env:
           ENV_NM: ${{ needs.setup-environment.outputs.env-name }}
           REGION_NM: ${{ needs.setup-environment.outputs.region-nm }}
+
+      - name: Azure logout
+        run: |
+            az logout
