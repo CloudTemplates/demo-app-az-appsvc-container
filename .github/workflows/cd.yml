@@ -37,6 +37,14 @@ env:
   APPLICATION_VERSION: ${{ github.event.client_payload.version || github.event.inputs.version }}
   ENVIRONMENT: ${{ github.event.client_payload.environment || github.event.inputs.environment }}
   REGION: ${{ github.event.client_payload.region || github.event.inputs.region }}
+  GHEC_LOGIN_ACCOUNTNAME: 'preetishmadalia'
+  ## Terraform Env Vars
+  ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}         # Service Principal ClientId with permissions to Resource Group
+  ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}     # Service Principal Secret with permissions to Resource Group
+  ARM_SUBSCRIPTION_ID: ${{ secrets.TF_AZURE_SUBSCRIPTION_ID }} # Azure Subscription ID
+  ARM_TENANT_ID: ${{ secrets.TF_AZURE_TENANT_ID }}       # Azure TenantId
+  TERRAFORM_VERSION: 1.1.9
+
 
 jobs:
   setup-environment:
@@ -79,11 +87,14 @@ jobs:
       #Run terraform on resource group folder
       - name: Azure RG Terraform Step
         run: |
+          git config --global url."https://${{ env.GHEC_LOGIN_ACCOUNTNAME }}:${{ env.GITHUB_TOKEN }}@github.com/CloudTemplates/".insteadOf "https://github.com/CloudTemplates/"
           cd ./src/terraform
           terraform -v
           terraform init
           terraform plan -var-file="${{ env.ENVIRONMENT }}-${{ env.REGION }}.tfvars"
           terraform apply -var-file="${{ env.ENVIRONMENT }}-${{ env.REGION }}.tfvars"  -auto-approve
+        env:
+          GITHUB_TOKEN : ${{ secrets.CLOUDTEMPLATES_TOKEN }}
 
   deploy:
     environment: ${{ github.event.client_payload.environment || github.event.inputs.environment }}
