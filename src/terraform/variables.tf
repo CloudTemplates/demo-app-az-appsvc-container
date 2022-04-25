@@ -48,3 +48,8 @@ variable "custom_tags" {
   description = "Add any custom tags apart from the ones retrieved from parent RG"
   default     = {}
 }
+
+variable "appservice_name1" {
+  description = "AppService name"
+  type        = string
+}
