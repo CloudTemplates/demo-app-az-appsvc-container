@@ -124,7 +124,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: demoapp-${{ env.ENV_NM }}-${{ env.REGION_NM }}-ap
-          images: 'https://index.docker.io/pmadalia:${{ env.APPLICATION_VERSION }}'
+          images: 'https://index.docker.io/v2/pmadalia:${{ env.APPLICATION_VERSION }}'
         env:
           ENV_NM: ${{ needs.setup-environment.outputs.env-name }}
           REGION_NM: ${{ needs.setup-environment.outputs.region-nm }}
