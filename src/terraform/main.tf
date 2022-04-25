@@ -6,12 +6,11 @@ module "appservice-demo" {
   source               = "git::https://github.com/CloudTemplates/terraform-modules.git//azure-modules/appservice-linux?ref=main"
   appservice_plan_name = var.appservice_plan_name
   resource_group_name  = var.resource_group_name
+  appservice_os_type   = var.appservice_os_type
+  appservice_sku_name  = var.appservice_sku_name
   appservice           = {
     appservice-1 = {
       appservice_name      = "appservice-demo1"
-      appservice_plan_name = var.appservice_plan_name
-      appservice_os_type   = var.appservice_os_type
-      appservice_sku_name  = var.appservice_sku_name
       site_config          = [
         {
           always_on         = true
