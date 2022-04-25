@@ -87,8 +87,8 @@ jobs:
       #Run terraform on resource group folder
       - name: Azure RG Terraform Step
         run: |
-          git config --global url."https://${{ env.GHEC_LOGIN_ACCOUNTNAME }}:${{ env.GITHUB_TOKEN }}@github.com/CloudTemplates/".insteadOf "https://github.com/CloudTemplates/"
           cd ./src/terraform
+          git config --global url."https://${{ env.GHEC_LOGIN_ACCOUNTNAME }}:${{ env.GITHUB_TOKEN }}@github.com/CloudTemplates/".insteadOf "https://github.com/CloudTemplates/"
           terraform -v
           terraform init
           terraform plan -var-file="${{ env.ENVIRONMENT }}-${{ env.REGION }}.tfvars"
