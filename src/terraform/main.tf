@@ -3,20 +3,23 @@ provider azurerm {
 }
 
 module "appservice-demo" {
-  source                   = "git::https://github.com/CloudTemplates/terraform-modules.git//azure-modules/appservice-linux?ref=main"
-  appservice_plan_name     = var.appservice_plan_name
-  resource_group_name      = var.resource_group_name
-  appservice               = {
+  source               = "git::https://github.com/CloudTemplates/terraform-modules.git//azure-modules/appservice-linux?ref=main"
+  appservice_plan_name = var.appservice_plan_name
+  resource_group_name  = var.resource_group_name
+  appservice           = {
     appservice-1 = {
-      appservice_name          = "appservice-demo1"
-      appservice_plan_name     = var.appservice_plan_name
-      site_config = [{
-        always_on =  true
-        #app_command_line          = "/home/site/wwwroot/init.sh"
-        linux_fx_version          =  "JAVA|11-java11"
-        health_check_path         =  "/actutator/health"
-        min_tls_verion            = "1.2"
-        ftps_state                = "FTPS Only"
-      }]
+      appservice_name      = "appservice-demo1"
+      appservice_plan_name = var.appservice_plan_name
+      site_config          = [
+        {
+          always_on         = true
+          #app_command_line          = "/home/site/wwwroot/init.sh"
+          linux_fx_version  = "JAVA|11-java11"
+          health_check_path = "/actutator/health"
+          min_tls_verion    = "1.2"
+          ftps_state        = "FTPS Only"
+        }
+      ]
     }
   }
+}
