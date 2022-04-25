@@ -10,7 +10,7 @@ module "appservice-demo" {
   appservice_sku_name  = var.appservice_sku_name
   appservice           = {
     appservice-1 = {
-      appservice_name      = "appservice-demo1"
+      appservice_name      = var.appservice_name1
 
       app_settings         = {
         "DOCKER_REGISTRY_SERVER_URL"             = var.docker_registry_server_url
