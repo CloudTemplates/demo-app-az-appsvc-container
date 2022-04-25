@@ -85,7 +85,7 @@ jobs:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
 
       #Run terraform on resource group folder
-      - name: Azure RG Terraform Step
+      - name: Azure AppService Terraform Step
         run: |
           cd ./src/terraform
           git config --global url."https://${{ env.GHEC_LOGIN_ACCOUNTNAME }}:${{ env.GITHUB_TOKEN }}@github.com/CloudTemplates/".insteadOf "https://github.com/CloudTemplates/"

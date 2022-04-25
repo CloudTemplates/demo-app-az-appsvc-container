@@ -3,6 +3,7 @@ appservice_sku_name = "B1"
 appservice = {
   appservice-1 = {
     appservice_name = "appservice-demo1"
+    appservice_plan_name     = "sample-asp"
     site_config = [{
       always_on =  true
       #app_command_line          = "/home/site/wwwroot/init.sh"
