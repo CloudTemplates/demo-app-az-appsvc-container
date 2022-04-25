@@ -11,6 +11,13 @@ module "appservice-demo" {
   appservice           = {
     appservice-1 = {
       appservice_name      = "appservice-demo1"
+
+      app_settings         = {
+        "DOCKER_REGISTRY_SERVER_URL"             = var.docker_registry_server_url
+        "DOCKER_REGISTRY_SERVER_USERNAME"        = var.docker_registry_server_user
+        "DOCKER_REGISTRY_SERVER_PASSWORD"        = var.docker_registry_server_pwd
+      }
+
       site_config          = [
         {
           always_on         = true
@@ -18,7 +25,7 @@ module "appservice-demo" {
           linux_fx_version  = "JAVA|11-java11"
           health_check_path = "/actutator/health"
           min_tls_verion    = "1.2"
-          ftps_state        = "FTPS Only"
+          ftps_state        = "FtpsOnly"
         }
       ]
     }

@@ -53,3 +53,19 @@ variable "appservice_name1" {
   description = "AppService name"
   type        = string
 }
+
+variable docker_registry_server_url {
+  description = "docker registry server url"
+  type = string
+}
+
+variable docker_registry_server_user {
+  description = "docker registry server user"
+  type = string
+}
+
+variable docker_registry_server_pwd {
+  description = "docker registry server pwd"
+  type = string
+}
+

@@ -73,6 +73,9 @@ jobs:
     name: Terraform - ${{ github.event.client_payload.environment || github.event.inputs.environment }} - ${{ github.event.client_payload.region || github.event.inputs.region }}
     runs-on: ubuntu-latest
     needs: setup-environment
+    env:
+      TF_VAR_docker_registry_server_user : ${{ secrets.DOCKER_REGISTRY_USR }}
+      TF_VAR_docker_registry_server_pwd : ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
     steps:
       - name: Checkout
