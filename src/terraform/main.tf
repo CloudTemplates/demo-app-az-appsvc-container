@@ -2,6 +2,13 @@ provider azurerm {
   features {}
 }
 
+#Uses Azure Storage Account to centralize Terraform State file reads/writes
+#Key must be unique to each terraform folder
+terraform {
+  backend "azurerm" {
+  }
+}
+
 module "appservice-demo" {
   source               = "git::https://github.com/CloudTemplates/terraform-modules.git//azure-modules/appservice-linux?ref=main"
   appservice_plan_name = var.appservice_plan_name
