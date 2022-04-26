@@ -74,8 +74,8 @@ jobs:
     needs: setup-environment
     env:
       TF_VAR_docker_registry_server_user : ${{ secrets.DOCKER_REGISTRY_USR }}
-      TF_VAR_docker_registry_server_pwd : ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-      ARM_ACCESS_KEY                 : ${{ needs.envId.outputs.region-nm == 'azeast' && secrets.TF_EASTUS_ARM_ACCESS_KEY || secrets.TF_WESTUS_ARM_ACCESS_KEY }}    # Terraform Storage Account Shared Key for State File
+      TF_VAR_docker_registry_server_pwd  : ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      ARM_ACCESS_KEY                     : ${{ needs.setup-environment.outputs.region-nm == 'azeast' && secrets.TF_EASTUS_ARM_ACCESS_KEY || secrets.TF_WESTUS_ARM_ACCESS_KEY }}    # Terraform Storage Account Shared Key for State File
     steps:
       - name: Checkout
         uses: actions/checkout@v2.4.0
