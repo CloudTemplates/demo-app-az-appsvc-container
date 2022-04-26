@@ -45,7 +45,6 @@ env:
   ARM_TENANT_ID: ${{ secrets.TF_AZURE_TENANT_ID }}       # Azure TenantId
   TERRAFORM_VERSION: 1.1.9
 
-
 jobs:
   setup-environment:
     runs-on: ubuntu-latest
@@ -76,7 +75,7 @@ jobs:
     env:
       TF_VAR_docker_registry_server_user : ${{ secrets.DOCKER_REGISTRY_USR }}
       TF_VAR_docker_registry_server_pwd : ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-
+      ARM_ACCESS_KEY                 : ${{ needs.envId.outputs.region-nm == 'azeast' && secrets.TF_EASTUS_ARM_ACCESS_KEY || secrets.TF_WESTUS_ARM_ACCESS_KEY }}    # Terraform Storage Account Shared Key for State File
     steps:
       - name: Checkout
         uses: actions/checkout@v2.4.0
@@ -93,7 +92,7 @@ jobs:
           cd ./src/terraform
           git config --global url."https://${{ env.GHEC_LOGIN_ACCOUNTNAME }}:${{ env.GITHUB_TOKEN }}@github.com/CloudTemplates/".insteadOf "https://github.com/CloudTemplates/"
           terraform -v
-          terraform init
+          terraform init -backend-config="${{ env.ENVIRONMENT }}-${{ env.REGION }}-backend.tfvars"
           terraform plan -var-file="${{ env.ENVIRONMENT }}-${{ env.REGION }}.tfvars"
           terraform apply -var-file="${{ env.ENVIRONMENT }}-${{ env.REGION }}.tfvars"  -auto-approve
         env:

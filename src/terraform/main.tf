@@ -21,11 +21,11 @@ module "appservice-demo" {
       site_config          = [
         {
           always_on         = true
-          #app_command_line          = "/home/site/wwwroot/init.sh"
           linux_fx_version  = "JAVA|11-java11"
-          health_check_path = "/actutator/health"
+          health_check_path = "/actuator/health"
           min_tls_verion    = "1.2"
           ftps_state        = "FtpsOnly"
+          ip_restriction    = {}
         }
       ]
     }
