@@ -57,7 +57,7 @@ jobs:
           push: true
           tags: pmadalia/${{ env.APPLICATION_NAME }}:${{ env.APPLICATION_VERSION }}
 
-      - name: Dev Auto Deploy workflow
+      - name: Dev Auto Deploy
         if: contains('develop', github.ref)
         uses: peter-evans/repository-dispatch@v2.0.0
         env:
