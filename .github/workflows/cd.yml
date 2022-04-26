@@ -5,7 +5,7 @@ name: Deploy
 # Controls when the action will run. Workflow runs when manually triggered using the UI or API.
 on:
   repository_dispatch:
-    types: [ deploy-command ]
+    types: [ deploy ]
 
   workflow_dispatch:
     # Inputs the workflow accepts.
