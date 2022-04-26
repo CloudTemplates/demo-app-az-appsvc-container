@@ -66,7 +66,7 @@ jobs:
         if: contains('refs/heads/develop', github.ref)
         uses: peter-evans/repository-dispatch@v2.0.0
         env:
-          GEN_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEN_TOKEN: ${{ secrets.CLOUDTEMPLATES_TOKEN }}
         with:
           token: ${{ env.GEN_TOKEN }}
           event-type: deploy
