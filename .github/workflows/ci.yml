@@ -71,7 +71,8 @@ jobs:
           token: ${{ env.GEN_TOKEN }}
           event-type: deploy
           client-payload: '{"version":"${{ env.APPLICATION_VERSION }}", "environment":"dev", "region":"eastus"}'
-          repository: .
+          repository: CloudTemplates/demo-app-az-appsvc-container
+
 ## TODO:
 # Implement Slack notification
 # Implement Auto Deploy
