@@ -13,10 +13,13 @@ In this repository I intend to provide full implementation of application deploy
 - Deployment into multiple environments.
 - Infrastructure Automation(Create and Destroy)
 
-## Example - Spring Boot for Azure App Services Container
+## Implementation Details
 
 - A sample spring boot app deployed on Azure App Services
-- Implements a simple continuous integration workflow for packaging app as docker image.
+- Github Action simple continuous integration workflow for packaging app as docker image.
+- Auto Deploy for commits into `development` branch.
 - Implements deployment into azure app service(embedded java server)
 - Utilize terraform to create and update resources on azure.
+- CD deployment into `dev` or `prod` environments.
+
 
