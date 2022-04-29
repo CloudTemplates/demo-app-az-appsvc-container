@@ -1,8 +1,8 @@
-# cloud-starter-templates
+# Deploy Java SpringBoot App on Azure App Service Container
 In this repository I intend to provide full implementation of application deployment on cloud. The template includes a small application, continuous integration and deployment using github actions.
 
 - CI/CD - Github Actions
-- Container Registry - Docker free tier
+- Container Registry - Docker
 - CodeQL - code scanning
 - Terraform - IaC
 
