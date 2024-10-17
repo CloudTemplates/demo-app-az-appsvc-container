@@ -7,8 +7,8 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'src/main/*'
-      - '.github/workflows/ci.yml'
+      - 'src/**'
+      - '.github/**/ci.yml'
   pull_request:
     branches: [ main ]
     paths:
